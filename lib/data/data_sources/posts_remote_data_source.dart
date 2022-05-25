@@ -4,13 +4,17 @@ import 'package:posts_app/data/models/post_model.dart';
 
 abstract class PostsRemoteDataSource {
   Future<List<PostModel>> getPosts();
+
   Future<void> deletePost(int postId);
+
   Future<void> createPost(PostModel post);
+
   Future<void> updatePost(PostModel post);
 }
 
 class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
   final DioHelper dioHelper;
+
   const PostsRemoteDataSourceImpl(this.dioHelper);
 
   @override
@@ -19,7 +23,11 @@ class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
       endpoint: ApiConstants.posts,
       method: Method.get,
     ) as List;
-    final posts = data.map<PostModel>((e) => PostModel.fromJson(e)).toList();
+
+    final posts = data
+        .map<PostModel>((postJSON) => PostModel.fromJson(postJSON))
+        .toList();
+
     return posts;
   }
 

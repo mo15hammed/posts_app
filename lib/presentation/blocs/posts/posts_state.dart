@@ -2,6 +2,9 @@ part of 'posts_bloc.dart';
 
 abstract class PostsState extends Equatable {
   const PostsState();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class PostsInitial extends PostsState {
@@ -13,6 +16,7 @@ class PostsLoadingState extends PostsState {
   @override
   List<Object> get props => [];
 }
+
 class PostsRefreshingState extends PostsState {
   @override
   List<Object> get props => [];

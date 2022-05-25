@@ -39,5 +39,6 @@ enum SlideDirection {
   leftToRight(offset: Offset(-1.0, 0.0));
 
   final Offset offset;
+
   const SlideDirection({required this.offset});
 }

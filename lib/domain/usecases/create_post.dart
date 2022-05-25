@@ -10,6 +10,6 @@ class CreatePost {
   const CreatePost(this._repository);
 
   Future<Either<Failure, Unit>> call(PostEntity post) async {
-    return await _repository.updatePost(post);
+    return await _repository.createPost(post);
   }
 }

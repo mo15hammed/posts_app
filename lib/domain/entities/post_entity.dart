@@ -13,4 +13,7 @@ class PostEntity extends Equatable {
 
   @override
   List<Object> get props => [id, title, body];
+
+  @override
+  bool get stringify => true;
 }

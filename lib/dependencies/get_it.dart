@@ -24,12 +24,14 @@ void setupDependencies() {
   getItInstance.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(getItInstance()),
   );
+
   getItInstance.registerLazySingleton<DioHelper>(() => DioHelper());
 
   // Data Sources
   getItInstance.registerLazySingleton<PostsLocalDataSource>(
     () => PostsLocalDataSourceImpl(),
   );
+
   getItInstance.registerLazySingleton<PostsRemoteDataSource>(
     () => PostsRemoteDataSourceImpl(getItInstance()),
   );
@@ -43,7 +45,7 @@ void setupDependencies() {
     ),
   );
 
-  // Usecases
+  // UseCases
   getItInstance.registerLazySingleton<GetAllPosts>(
     () => GetAllPosts(getItInstance()),
   );

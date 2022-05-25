@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:posts_app/data/models/post_model.dart';
 import 'package:posts_app/domain/entities/post_entity.dart';
 
 part 'post_table.g.dart';
@@ -22,7 +23,7 @@ class PostTable extends PostEntity {
           body: tBody,
         );
 
-  factory PostTable.fromModel(PostEntity post) {
+  factory PostTable.fromModel(PostModel post) {
     return PostTable(
       tId: post.id,
       tTitle: post.title,

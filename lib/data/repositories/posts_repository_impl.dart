@@ -28,19 +28,16 @@ class PostsRepositoryImpl implements PostsRepository {
         await localDataSource.cachePosts(remotePosts);
         return Right(remotePosts);
       } on ServerException catch (e) {
-        return Left(Failure(FailureType.api, e.message));
+        return Left(Failure(FailureType.server, e.message));
       } on ConnectionException catch (e) {
-        return Left(Failure(FailureType.network, e.message));
+        return Left(Failure(FailureType.connection, e.message));
       }
     } else {
       try {
         final localPosts = await localDataSource.getCachedPosts();
         return Right(localPosts);
-      } on EmptyCacheException {
-        return Left(Failure(
-          FailureType.emptyCache,
-          FailureType.emptyCache.message,
-        ));
+      } on EmptyCacheException catch (e) {
+        return Left(Failure(FailureType.emptyCache, e.message));
       }
     }
   }
@@ -49,25 +46,19 @@ class PostsRepositoryImpl implements PostsRepository {
   Future<Either<Failure, Unit>> createPost(PostEntity post) async {
     final postModel = PostModel.fromEntity(post);
 
-    return await _catchExceptions(() {
-      return remoteDataSource.createPost(postModel);
-    });
+    return await _catchExceptions(() => remoteDataSource.createPost(postModel));
   }
 
   @override
   Future<Either<Failure, Unit>> updatePost(PostEntity post) async {
     final postModel = PostModel.fromEntity(post);
 
-    return await _catchExceptions(() {
-      return remoteDataSource.updatePost(postModel);
-    });
+    return await _catchExceptions(() => remoteDataSource.updatePost(postModel));
   }
 
   @override
   Future<Either<Failure, Unit>> deletePost(int postId) async {
-    return await _catchExceptions(() {
-      return remoteDataSource.deletePost(postId);
-    });
+    return await _catchExceptions(() => remoteDataSource.deletePost(postId));
   }
 
   Future<Either<Failure, Unit>> _catchExceptions(Future Function() func) async {
@@ -77,12 +68,13 @@ class PostsRepositoryImpl implements PostsRepository {
         await func();
         return const Right(unit);
       } on ServerException catch (e) {
-        return Left(Failure(FailureType.api, e.message));
+        return Left(Failure(FailureType.server, e.message));
       } on ConnectionException catch (e) {
-        return Left(Failure(FailureType.network, e.message));
+        return Left(Failure(FailureType.connection, e.message));
       }
     } else {
-      return Left(Failure(FailureType.network, FailureType.network.message));
+      return Left(
+          Failure(FailureType.connection, FailureType.connection.message));
     }
   }
 }
