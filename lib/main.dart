@@ -14,6 +14,7 @@ var logger = Logger();
 void main() async {
   await Hive.initFlutter();
   get_it.setupDependencies();
+
   runApp(const MyApp());
 }
 

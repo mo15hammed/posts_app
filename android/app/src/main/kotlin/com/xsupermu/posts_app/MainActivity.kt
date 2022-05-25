@@ -1,4 +1,4 @@
-package com.mo15hammed.posts_app
+package com.xsupermu.posts_app
 
 import io.flutter.embedding.android.FlutterActivity
 
