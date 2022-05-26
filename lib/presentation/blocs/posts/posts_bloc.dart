@@ -12,8 +12,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   final GetAllPostsUsecase getAllPosts;
 
   PostsBloc(this.getAllPosts) : super(PostsInitial()) {
-    on<GetAllPostsEvent>(_handleGetAllPostsEvent);
-    on<RefreshPostsEvent>(_handleGetAllPostsEvent);
+    on<PostsEvent>(_handleGetAllPostsEvent);
   }
 
   void _handleGetAllPostsEvent(
