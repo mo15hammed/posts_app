@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:posts_app/core/error/failures.dart';
@@ -22,7 +23,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     if (event is GetAllPostsEvent) emit(PostsLoadingState());
     if (event is RefreshPostsEvent) emit(PostsRefreshingState());
 
-    final postsEither = await getAllPosts();
+    final postsEither = await getAllPosts(params: unit);
 
     postsEither.fold(
       (failure) {
@@ -33,6 +34,4 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       },
     );
   }
-
-
 }

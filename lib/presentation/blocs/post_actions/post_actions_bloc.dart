@@ -32,7 +32,7 @@ class PostActionsBloc extends Bloc<PostActionsEvent, PostActionsState> {
   ) async {
     emit(PostActionsLoadingState());
 
-    final either = await createPost.call(event.post);
+    final either = await createPost.call(params: event.post);
 
     emit(getFailureOrSuccessState(either, Strings.postsCreatedSuccessfully));
   }
@@ -43,7 +43,7 @@ class PostActionsBloc extends Bloc<PostActionsEvent, PostActionsState> {
   ) async {
     emit(PostActionsLoadingState());
 
-    final either = await updatePost.call(event.post);
+    final either = await updatePost.call(params: event.post);
 
     emit(getFailureOrSuccessState(either, Strings.postsUpdatedSuccessfully));
   }
@@ -54,7 +54,7 @@ class PostActionsBloc extends Bloc<PostActionsEvent, PostActionsState> {
   ) async {
     emit(PostActionsLoadingState());
 
-    final either = await deletePost.call(event.postId);
+    final either = await deletePost.call(params: event.postId);
 
     emit(getFailureOrSuccessState(either, Strings.postsDeletedSuccessfully));
   }
