@@ -12,14 +12,14 @@ part 'post_actions_event.dart';
 part 'post_actions_state.dart';
 
 class PostActionsBloc extends Bloc<PostActionsEvent, PostActionsState> {
-  final CreatePostUsecase createPost;
-  final UpdatePostUsecase updatePost;
-  final DeletePostUsecase deletePost;
+  final CreatePostUsecase createPostUsecase;
+  final UpdatePostUsecase updatePostUsecase;
+  final DeletePostUsecase deletePostUsecase;
 
   PostActionsBloc({
-    required this.createPost,
-    required this.updatePost,
-    required this.deletePost,
+    required this.createPostUsecase,
+    required this.updatePostUsecase,
+    required this.deletePostUsecase,
   }) : super(PostActionsInitial()) {
     on<CreatePostEvent>(_handleCreatePostEvent);
     on<UpdatePostEvent>(_handleUpdatePostEvent);
@@ -32,7 +32,7 @@ class PostActionsBloc extends Bloc<PostActionsEvent, PostActionsState> {
   ) async {
     emit(PostActionsLoadingState());
 
-    final either = await createPost.call(params: event.post);
+    final either = await createPostUsecase.call(params: event.post);
 
     emit(getFailureOrSuccessState(either, Strings.postsCreatedSuccessfully));
   }
@@ -43,7 +43,7 @@ class PostActionsBloc extends Bloc<PostActionsEvent, PostActionsState> {
   ) async {
     emit(PostActionsLoadingState());
 
-    final either = await updatePost.call(params: event.post);
+    final either = await updatePostUsecase.call(params: event.post);
 
     emit(getFailureOrSuccessState(either, Strings.postsUpdatedSuccessfully));
   }
@@ -54,7 +54,7 @@ class PostActionsBloc extends Bloc<PostActionsEvent, PostActionsState> {
   ) async {
     emit(PostActionsLoadingState());
 
-    final either = await deletePost.call(params: event.postId);
+    final either = await deletePostUsecase.call(params: event.postId);
 
     emit(getFailureOrSuccessState(either, Strings.postsDeletedSuccessfully));
   }

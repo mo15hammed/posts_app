@@ -18,6 +18,25 @@ final getItInstance = GetIt.instance;
 
 Future<void> setupDependencies() async {
   // External
+  await _setUpExternalDependencies();
+
+  // Core
+  _setUpCoreDependencies();
+
+  // Data Sources
+  _setUpDataSourcesDependencies();
+
+  // Repositories
+  _setUpRepositoriesDependencies();
+
+  // UseCases
+  _setUpUsecasesDependencies();
+
+  // Blocs
+  _setUpBlocsDependencies();
+}
+
+Future<void> _setUpExternalDependencies() async {
   getItInstance.registerLazySingleton<InternetConnectionChecker>(
       () => InternetConnectionChecker());
 
@@ -26,15 +45,17 @@ Future<void> setupDependencies() async {
 
   getItInstance
       .registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+}
 
-  // Core
+void _setUpCoreDependencies() {
   getItInstance.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(getItInstance()),
   );
 
   getItInstance.registerLazySingleton<DioHelper>(() => DioHelper());
+}
 
-  // Data Sources
+void _setUpDataSourcesDependencies() {
   getItInstance.registerLazySingleton<LocalDataSource>(
     () => LocalDataSourceImplWithHive(),
   );
@@ -46,8 +67,9 @@ Future<void> setupDependencies() async {
   getItInstance.registerLazySingleton<RemoteDataSource>(
     () => RemoteDataSourceImpl(getItInstance()),
   );
+}
 
-  // Repositories
+void _setUpRepositoriesDependencies() {
   getItInstance.registerLazySingleton<PostsRepository>(
     () => PostsRepositoryImpl(
       localDataSource: getItInstance(),
@@ -55,8 +77,9 @@ Future<void> setupDependencies() async {
       networkInfo: getItInstance(),
     ),
   );
+}
 
-  // UseCases
+void _setUpUsecasesDependencies() {
   getItInstance.registerLazySingleton<GetAllPostsUsecase>(
     () => GetAllPostsUsecase(getItInstance()),
   );
@@ -66,14 +89,15 @@ Future<void> setupDependencies() async {
       () => UpdatePostUsecase(getItInstance()));
   getItInstance.registerLazySingleton<DeletePostUsecase>(
       () => DeletePostUsecase(getItInstance()));
+}
 
-  // Blocs
+void _setUpBlocsDependencies() {
   getItInstance.registerFactory<PostsBloc>(() => PostsBloc(getItInstance()));
   getItInstance.registerFactory<PostActionsBloc>(
     () => PostActionsBloc(
-      createPost: getItInstance(),
-      updatePost: getItInstance(),
-      deletePost: getItInstance(),
+      createPostUsecase: getItInstance(),
+      updatePostUsecase: getItInstance(),
+      deletePostUsecase: getItInstance(),
     ),
   );
 }

@@ -9,9 +9,9 @@ part 'posts_event.dart';
 part 'posts_state.dart';
 
 class PostsBloc extends Bloc<PostsEvent, PostsState> {
-  final GetAllPostsUsecase getAllPosts;
+  final GetAllPostsUsecase getAllPostsUsecase;
 
-  PostsBloc(this.getAllPosts) : super(PostsInitial()) {
+  PostsBloc(this.getAllPostsUsecase) : super(PostsInitial()) {
     on<PostsEvent>(_handleGetAllPostsEvent);
   }
 
@@ -22,7 +22,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     if (event is GetAllPostsEvent) emit(PostsLoadingState());
     if (event is RefreshPostsEvent) emit(PostsRefreshingState());
 
-    final postsEither = await getAllPosts(params: unit);
+    final postsEither = await getAllPostsUsecase(params: unit);
 
     postsEither.fold(
       (failure) {
