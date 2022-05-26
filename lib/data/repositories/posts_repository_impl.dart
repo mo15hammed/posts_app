@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:posts_app/core/error/exceptions.dart';
 import 'package:posts_app/core/error/failures.dart';
 import 'package:posts_app/core/network/network_info.dart';
-import 'package:posts_app/data/core/dio_helper.dart';
 import 'package:posts_app/data/data_sources/posts_local_data_source.dart';
 import 'package:posts_app/data/data_sources/posts_remote_data_source.dart';
 import 'package:posts_app/data/models/post_model.dart';
@@ -30,7 +29,7 @@ class PostsRepositoryImpl implements PostsRepository {
         await localDataSource.cachePosts(remotePosts);
         return Right(remotePosts);
       } on DioError catch (e) {
-        return Left(Failure(FailureType.server, e.errorMessage));
+        return Left(Failure(FailureType.server, e.message));
       }
     } else {
       try {
@@ -68,7 +67,7 @@ class PostsRepositoryImpl implements PostsRepository {
         await func();
         return const Right(unit);
       } on DioError catch (e) {
-        return Left(Failure(FailureType.server, e.errorMessage));
+        return Left(Failure(FailureType.server, e.message));
       }
     } else {
       return Left(

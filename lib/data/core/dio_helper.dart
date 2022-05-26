@@ -5,11 +5,11 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 enum Method { post, get, put, delete, patch }
 
-extension DioErrorExtensions on DioError {
-  String get errorMessage {
-    return response?.data['status_message'] ?? message;
-  }
-}
+// extension DioErrorExtensions on DioError {
+//   String get errorMessage {
+//     return response?.data['status_message'] ?? message;
+//   }
+// }
 
 class DioHelper {
   late Dio _dio;
