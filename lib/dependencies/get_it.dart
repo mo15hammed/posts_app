@@ -2,8 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:posts_app/core/network/network_info.dart';
 import 'package:posts_app/data/core/dio_helper.dart';
-import 'package:posts_app/data/data_sources/posts_local_data_source.dart';
-import 'package:posts_app/data/data_sources/posts_remote_data_source.dart';
+import 'package:posts_app/data/data_sources/local_data_source.dart';
+import 'package:posts_app/data/data_sources/remote_data_source.dart';
 import 'package:posts_app/data/repositories/posts_repository_impl.dart';
 import 'package:posts_app/domain/repositories/posts_repository.dart';
 import 'package:posts_app/domain/usecases/create_post.dart';
@@ -12,13 +12,20 @@ import 'package:posts_app/domain/usecases/get_posts.dart';
 import 'package:posts_app/domain/usecases/update_post.dart';
 import 'package:posts_app/presentation/blocs/post_actions/post_actions_bloc.dart';
 import 'package:posts_app/presentation/blocs/posts/posts_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final getItInstance = GetIt.instance;
 
-void setupDependencies() {
+Future<void> setupDependencies() async {
   // External
   getItInstance.registerLazySingleton<InternetConnectionChecker>(
       () => InternetConnectionChecker());
+
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
+
+  getItInstance
+      .registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 
   // Core
   getItInstance.registerLazySingleton<NetworkInfo>(
@@ -28,12 +35,16 @@ void setupDependencies() {
   getItInstance.registerLazySingleton<DioHelper>(() => DioHelper());
 
   // Data Sources
-  getItInstance.registerLazySingleton<PostsLocalDataSource>(
-    () => PostsLocalDataSourceImpl(),
+  getItInstance.registerLazySingleton<LocalDataSource>(
+    () => LocalDataSourceImplWithHive(),
   );
 
-  getItInstance.registerLazySingleton<PostsRemoteDataSource>(
-    () => PostsRemoteDataSourceImpl(getItInstance()),
+  // getItInstance.registerLazySingleton<LocalDataSource>(
+  //   () => LocalDataSourceWithSharedPref(getItInstance()),
+  // );
+
+  getItInstance.registerLazySingleton<RemoteDataSource>(
+    () => RemoteDataSourceImpl(getItInstance()),
   );
 
   // Repositories

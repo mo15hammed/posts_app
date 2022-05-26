@@ -3,8 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:posts_app/core/error/exceptions.dart';
 import 'package:posts_app/core/error/failures.dart';
 import 'package:posts_app/core/network/network_info.dart';
-import 'package:posts_app/data/data_sources/posts_local_data_source.dart';
-import 'package:posts_app/data/data_sources/posts_remote_data_source.dart';
+import 'package:posts_app/data/data_sources/local_data_source.dart';
+import 'package:posts_app/data/data_sources/remote_data_source.dart';
 import 'package:posts_app/data/models/post_model.dart';
 import 'package:posts_app/domain/entities/post_entity.dart';
 import 'package:posts_app/domain/repositories/posts_repository.dart';
@@ -12,8 +12,8 @@ import 'package:posts_app/domain/repositories/posts_repository.dart';
 typedef ContactServer = Future<void> Function();
 
 class PostsRepositoryImpl implements PostsRepository {
-  final PostsRemoteDataSource remoteDataSource;
-  final PostsLocalDataSource localDataSource;
+  final RemoteDataSource remoteDataSource;
+  final LocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
   const PostsRepositoryImpl({

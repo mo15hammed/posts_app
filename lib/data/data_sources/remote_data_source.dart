@@ -2,7 +2,7 @@ import 'package:posts_app/core/constants/api_constants.dart';
 import 'package:posts_app/data/core/dio_helper.dart';
 import 'package:posts_app/data/models/post_model.dart';
 
-abstract class PostsRemoteDataSource {
+abstract class RemoteDataSource {
   Future<List<PostModel>> getPosts();
 
   Future<void> deletePost(int postId);
@@ -12,10 +12,10 @@ abstract class PostsRemoteDataSource {
   Future<void> updatePost(PostModel post);
 }
 
-class PostsRemoteDataSourceImpl implements PostsRemoteDataSource {
+class RemoteDataSourceImpl implements RemoteDataSource {
   final DioHelper dioHelper;
 
-  const PostsRemoteDataSourceImpl(this.dioHelper);
+  const RemoteDataSourceImpl(this.dioHelper);
 
   @override
   Future<List<PostModel>> getPosts() async {

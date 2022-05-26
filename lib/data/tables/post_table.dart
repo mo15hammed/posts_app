@@ -30,4 +30,12 @@ class PostTable extends PostEntity {
       tBody: post.body,
     );
   }
+
+  factory PostTable.fromJson(Map<String, dynamic> json) {
+    return PostTable(
+      tId: json['id'],
+      tTitle: json['title'],
+      tBody: json['body'],
+    );
+  }
 }
