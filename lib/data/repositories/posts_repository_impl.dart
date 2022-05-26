@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:posts_app/core/error/exceptions.dart';
 import 'package:posts_app/core/error/failures.dart';
 import 'package:posts_app/core/network/network_info.dart';
+import 'package:posts_app/data/core/dio_helper.dart';
 import 'package:posts_app/data/data_sources/posts_local_data_source.dart';
 import 'package:posts_app/data/data_sources/posts_remote_data_source.dart';
 import 'package:posts_app/data/models/post_model.dart';
@@ -27,10 +29,8 @@ class PostsRepositoryImpl implements PostsRepository {
         final remotePosts = await remoteDataSource.getPosts();
         await localDataSource.cachePosts(remotePosts);
         return Right(remotePosts);
-      } on ServerException catch (e) {
-        return Left(Failure(FailureType.server, e.message));
-      } on ConnectionException catch (e) {
-        return Left(Failure(FailureType.connection, e.message));
+      } on DioError catch (e) {
+        return Left(Failure(FailureType.server, e.errorMessage));
       }
     } else {
       try {
@@ -67,10 +67,8 @@ class PostsRepositoryImpl implements PostsRepository {
       try {
         await func();
         return const Right(unit);
-      } on ServerException catch (e) {
-        return Left(Failure(FailureType.server, e.message));
-      } on ConnectionException catch (e) {
-        return Left(Failure(FailureType.connection, e.message));
+      } on DioError catch (e) {
+        return Left(Failure(FailureType.server, e.errorMessage));
       }
     } else {
       return Left(

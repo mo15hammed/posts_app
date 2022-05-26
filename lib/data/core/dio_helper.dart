@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:posts_app/core/constants/api_constants.dart';
-import 'package:posts_app/core/constants/strings.dart';
-import 'package:posts_app/core/error/exceptions.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 enum Method { post, get, put, delete, patch }
+
+extension DioErrorExtensions on DioError {
+  String get errorMessage {
+    return response?.data['status_message'] ?? message;
+  }
+}
 
 class DioHelper {
   late Dio _dio;
@@ -52,18 +56,10 @@ class DioHelper {
       } else {
         response = await _dio.get(endpoint, queryParameters: params);
       }
-    } on DioError catch (e) {
-      if (e.type == DioErrorType.other) {
-        throw ConnectionException(e.message);
-      } else {
-        throw ServerException(e.message);
-      }
+    } on DioError {
+      rethrow;
     }
 
-    if (response.statusCode == 200) {
-      return response.data;
-    } else {
-      throw ServerException(response.statusMessage ?? Strings.apiFailure);
-    }
+    return response.data;
   }
 }
