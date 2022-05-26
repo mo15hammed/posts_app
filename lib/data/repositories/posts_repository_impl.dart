@@ -9,6 +9,8 @@ import 'package:posts_app/data/models/post_model.dart';
 import 'package:posts_app/domain/entities/post_entity.dart';
 import 'package:posts_app/domain/repositories/posts_repository.dart';
 
+typedef ContactServer = Future<void> Function();
+
 class PostsRepositoryImpl implements PostsRepository {
   final PostsRemoteDataSource remoteDataSource;
   final PostsLocalDataSource localDataSource;
@@ -60,11 +62,12 @@ class PostsRepositoryImpl implements PostsRepository {
     return await _catchExceptions(() => remoteDataSource.deletePost(postId));
   }
 
-  Future<Either<Failure, Unit>> _catchExceptions(Future Function() func) async {
+  Future<Either<Failure, Unit>> _catchExceptions(
+      ContactServer contactServer) async {
     bool isConnected = await networkInfo.isConnected;
     if (isConnected) {
       try {
-        await func();
+        await contactServer();
         return const Right(unit);
       } on DioError catch (e) {
         return Left(Failure(FailureType.server, e.message));
