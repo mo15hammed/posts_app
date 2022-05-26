@@ -7,20 +7,11 @@ abstract class PostsState extends Equatable {
   List<Object?> get props => [];
 }
 
-class PostsInitial extends PostsState {
-  @override
-  List<Object> get props => [];
-}
+class PostsInitial extends PostsState {}
 
-class PostsLoadingState extends PostsState {
-  @override
-  List<Object> get props => [];
-}
+class PostsLoadingState extends PostsState {}
 
-class PostsRefreshingState extends PostsState {
-  @override
-  List<Object> get props => [];
-}
+class PostsRefreshingState extends PostsState {}
 
 class PostsLoadedState extends PostsState {
   final List<PostEntity> posts;
@@ -29,6 +20,9 @@ class PostsLoadedState extends PostsState {
 
   @override
   List<Object> get props => [posts];
+
+  @override
+  bool get stringify => false;
 }
 
 class PostsErrorState extends PostsState {

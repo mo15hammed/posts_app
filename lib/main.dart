@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:posts_app/dependencies/get_it.dart' as get_it;
+import 'package:posts_app/presentation/blocs/app_bloc_observer.dart';
 import 'package:posts_app/presentation/blocs/post_actions/post_actions_bloc.dart';
 import 'package:posts_app/presentation/blocs/posts/posts_bloc.dart';
 import 'package:posts_app/presentation/routing/app_router.dart';
@@ -15,7 +16,12 @@ void main() async {
   await Hive.initFlutter();
   get_it.setupDependencies();
 
-  runApp(const MyApp());
+  BlocOverrides.runZoned(
+    () {
+      runApp(const MyApp());
+    },
+    blocObserver: AppBlocObserver(),
+  );
 }
 
 class MyApp extends StatelessWidget {

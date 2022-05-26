@@ -2,17 +2,13 @@ part of 'post_actions_bloc.dart';
 
 abstract class PostActionsState extends Equatable {
   const PostActionsState();
-}
-
-class PostActionsInitial extends PostActionsState {
   @override
   List<Object> get props => [];
 }
 
-class PostActionsLoadingState extends PostActionsState {
-  @override
-  List<Object> get props => [];
-}
+class PostActionsInitial extends PostActionsState {}
+
+class PostActionsLoadingState extends PostActionsState {}
 
 class PostActionsSuccessState extends PostActionsState {
   final String message;
