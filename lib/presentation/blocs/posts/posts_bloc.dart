@@ -1,15 +1,15 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posts_app/core/error/failures.dart';
 import 'package:posts_app/domain/entities/post_entity.dart';
-import 'package:posts_app/domain/usecases/get_posts.dart';
+import 'package:posts_app/domain/usecases/get_posts_usecase.dart';
 
 part 'posts_event.dart';
 part 'posts_state.dart';
 
 class PostsBloc extends Bloc<PostsEvent, PostsState> {
-  final GetAllPosts getAllPosts;
+  final GetAllPostsUsecase getAllPosts;
 
   PostsBloc(this.getAllPosts) : super(PostsInitial()) {
     on<GetAllPostsEvent>(_handleGetAllPostsEvent);

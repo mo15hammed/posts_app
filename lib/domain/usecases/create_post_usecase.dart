@@ -5,10 +5,10 @@ import 'package:posts_app/domain/usecases/base_usecase.dart';
 
 import '../entities/post_entity.dart';
 
-class CreatePost extends BaseUsecase<Unit, PostEntity> {
+class CreatePostUsecase extends BaseUsecase<Unit, PostEntity> {
   final PostsRepository _repository;
 
-  const CreatePost(this._repository);
+  const CreatePostUsecase(this._repository);
 
   @override
   Future<Either<Failure, Unit>> call({required PostEntity params}) async {

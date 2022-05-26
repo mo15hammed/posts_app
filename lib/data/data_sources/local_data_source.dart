@@ -64,7 +64,7 @@ class LocalDataSourceWithSharedPref implements LocalDataSource {
   Future<List<PostTable>> getCachedPosts() async {
     final postsJsonString = sharedPreferences.getString(_cachePostsKey);
     if (postsJsonString != null) {
-      List decodedJsonData = json.decode(postsJsonString);
+      List decodedJsonData = json.decode(postsJsonString) as List;
       final jsonToPosts = decodedJsonData
           .map<PostTable>((postJson) => PostTable.fromJson(postJson))
           .toList();

@@ -4,10 +4,10 @@ import 'package:posts_app/domain/entities/post_entity.dart';
 import 'package:posts_app/domain/repositories/posts_repository.dart';
 import 'package:posts_app/domain/usecases/base_usecase.dart';
 
-class GetAllPosts extends BaseUsecase<List<PostEntity>, Unit> {
+class GetAllPostsUsecase extends BaseUsecase<List<PostEntity>, Unit> {
   final PostsRepository _repository;
 
-  const GetAllPosts(this._repository);
+  const GetAllPostsUsecase(this._repository);
 
   @override
   Future<Either<Failure, List<PostEntity>>> call({required Unit params}) async {

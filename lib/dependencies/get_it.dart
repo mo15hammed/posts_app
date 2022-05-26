@@ -6,10 +6,10 @@ import 'package:posts_app/data/data_sources/local_data_source.dart';
 import 'package:posts_app/data/data_sources/remote_data_source.dart';
 import 'package:posts_app/data/repositories/posts_repository_impl.dart';
 import 'package:posts_app/domain/repositories/posts_repository.dart';
-import 'package:posts_app/domain/usecases/create_post.dart';
-import 'package:posts_app/domain/usecases/delete_post.dart';
-import 'package:posts_app/domain/usecases/get_posts.dart';
-import 'package:posts_app/domain/usecases/update_post.dart';
+import 'package:posts_app/domain/usecases/create_post_usecase.dart';
+import 'package:posts_app/domain/usecases/delete_post_usecase.dart';
+import 'package:posts_app/domain/usecases/get_posts_usecase.dart';
+import 'package:posts_app/domain/usecases/update_post_usecase.dart';
 import 'package:posts_app/presentation/blocs/post_actions/post_actions_bloc.dart';
 import 'package:posts_app/presentation/blocs/posts/posts_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,15 +57,15 @@ Future<void> setupDependencies() async {
   );
 
   // UseCases
-  getItInstance.registerLazySingleton<GetAllPosts>(
-    () => GetAllPosts(getItInstance()),
+  getItInstance.registerLazySingleton<GetAllPostsUsecase>(
+    () => GetAllPostsUsecase(getItInstance()),
   );
-  getItInstance
-      .registerLazySingleton<CreatePost>(() => CreatePost(getItInstance()));
-  getItInstance
-      .registerLazySingleton<UpdatePost>(() => UpdatePost(getItInstance()));
-  getItInstance
-      .registerLazySingleton<DeletePost>(() => DeletePost(getItInstance()));
+  getItInstance.registerLazySingleton<CreatePostUsecase>(
+      () => CreatePostUsecase(getItInstance()));
+  getItInstance.registerLazySingleton<UpdatePostUsecase>(
+      () => UpdatePostUsecase(getItInstance()));
+  getItInstance.registerLazySingleton<DeletePostUsecase>(
+      () => DeletePostUsecase(getItInstance()));
 
   // Blocs
   getItInstance.registerFactory<PostsBloc>(() => PostsBloc(getItInstance()));
