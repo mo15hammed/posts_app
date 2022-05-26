@@ -5,7 +5,7 @@ import 'package:posts_app/domain/usecases/base_usecase.dart';
 
 import '../entities/post_entity.dart';
 
-class CreatePostUsecase extends BaseUsecase<Unit, PostEntity> {
+class CreatePostUsecase extends BaseUsecase<PostEntity, Unit> {
   final PostsRepository _repository;
 
   const CreatePostUsecase(this._repository);

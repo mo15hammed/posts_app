@@ -4,7 +4,7 @@ import 'package:posts_app/domain/entities/post_entity.dart';
 import 'package:posts_app/domain/repositories/posts_repository.dart';
 import 'package:posts_app/domain/usecases/base_usecase.dart';
 
-class GetAllPostsUsecase extends BaseUsecase<List<PostEntity>, Unit> {
+class GetAllPostsUsecase extends BaseUsecase<Unit, List<PostEntity>> {
   final PostsRepository _repository;
 
   const GetAllPostsUsecase(this._repository);
