@@ -5,6 +5,7 @@ import 'package:posts_app/data/core/dio_helper.dart';
 import 'package:posts_app/data/data_sources/local_data_source.dart';
 import 'package:posts_app/data/data_sources/remote_data_source.dart';
 import 'package:posts_app/data/repositories/posts_repository_impl.dart';
+import 'package:posts_app/domain/repositories/posts_repository.dart';
 import 'package:posts_app/domain/usecases/create_post_usecase.dart';
 import 'package:posts_app/domain/usecases/delete_post_usecase.dart';
 import 'package:posts_app/domain/usecases/get_posts_usecase.dart';
@@ -44,7 +45,7 @@ Future<void> _setUpExternalDependencies() async {
 }
 
 void _setUpCoreDependencies() {
-  getItInstance.registerLazySingleton(
+  getItInstance.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(getItInstance()),
   );
 
@@ -52,21 +53,21 @@ void _setUpCoreDependencies() {
 }
 
 void _setUpDataSourcesDependencies() {
-  getItInstance.registerLazySingleton(
+  getItInstance.registerLazySingleton<LocalDataSource>(
     () => LocalDataSourceImplWithHive(),
   );
 
-  // getItInstance.registerLazySingleton(
+  // getItInstance.registerLazySingleton<LocalDataSource>(
   //   () => LocalDataSourceWithSharedPref(getItInstance()),
   // );
 
-  getItInstance.registerLazySingleton(
+  getItInstance.registerLazySingleton<RemoteDataSource>(
     () => RemoteDataSourceImpl(getItInstance()),
   );
 }
 
 void _setUpRepositoriesDependencies() {
-  getItInstance.registerLazySingleton(
+  getItInstance.registerLazySingleton<PostsRepository>(
     () => PostsRepositoryImpl(
       localDataSource: getItInstance(),
       remoteDataSource: getItInstance(),

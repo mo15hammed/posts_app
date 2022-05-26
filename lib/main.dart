@@ -13,8 +13,9 @@ import 'package:posts_app/presentation/themes/custom_scroll_behavior.dart';
 var logger = Logger();
 
 void main() async {
-  await Hive.initFlutter();
+  WidgetsFlutterBinding.ensureInitialized();
   await get_it.setupDependencies();
+  await Hive.initFlutter();
 
   BlocOverrides.runZoned(
     () {
