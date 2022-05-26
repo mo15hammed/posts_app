@@ -5,14 +5,12 @@ import 'package:posts_app/data/core/dio_helper.dart';
 import 'package:posts_app/data/data_sources/local_data_source.dart';
 import 'package:posts_app/data/data_sources/remote_data_source.dart';
 import 'package:posts_app/data/repositories/posts_repository_impl.dart';
-import 'package:posts_app/domain/repositories/posts_repository.dart';
 import 'package:posts_app/domain/usecases/create_post_usecase.dart';
 import 'package:posts_app/domain/usecases/delete_post_usecase.dart';
 import 'package:posts_app/domain/usecases/get_posts_usecase.dart';
 import 'package:posts_app/domain/usecases/update_post_usecase.dart';
 import 'package:posts_app/presentation/blocs/post_actions/post_actions_bloc.dart';
 import 'package:posts_app/presentation/blocs/posts/posts_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final getItInstance = GetIt.instance;
 
@@ -37,40 +35,38 @@ Future<void> setupDependencies() async {
 }
 
 Future<void> _setUpExternalDependencies() async {
-  getItInstance.registerLazySingleton<InternetConnectionChecker>(
-      () => InternetConnectionChecker());
+  getItInstance.registerLazySingleton(() => InternetConnectionChecker());
 
-  final SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
-
-  getItInstance
-      .registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+  // final SharedPreferences sharedPreferences =
+  //     await SharedPreferences.getInstance();
+  //
+  // getItInstance.registerLazySingleton(() => sharedPreferences);
 }
 
 void _setUpCoreDependencies() {
-  getItInstance.registerLazySingleton<NetworkInfo>(
+  getItInstance.registerLazySingleton(
     () => NetworkInfoImpl(getItInstance()),
   );
 
-  getItInstance.registerLazySingleton<DioHelper>(() => DioHelper());
+  getItInstance.registerLazySingleton(() => DioHelper());
 }
 
 void _setUpDataSourcesDependencies() {
-  getItInstance.registerLazySingleton<LocalDataSource>(
+  getItInstance.registerLazySingleton(
     () => LocalDataSourceImplWithHive(),
   );
 
-  // getItInstance.registerLazySingleton<LocalDataSource>(
+  // getItInstance.registerLazySingleton(
   //   () => LocalDataSourceWithSharedPref(getItInstance()),
   // );
 
-  getItInstance.registerLazySingleton<RemoteDataSource>(
+  getItInstance.registerLazySingleton(
     () => RemoteDataSourceImpl(getItInstance()),
   );
 }
 
 void _setUpRepositoriesDependencies() {
-  getItInstance.registerLazySingleton<PostsRepository>(
+  getItInstance.registerLazySingleton(
     () => PostsRepositoryImpl(
       localDataSource: getItInstance(),
       remoteDataSource: getItInstance(),
@@ -80,20 +76,16 @@ void _setUpRepositoriesDependencies() {
 }
 
 void _setUpUsecasesDependencies() {
-  getItInstance.registerLazySingleton<GetAllPostsUsecase>(
-    () => GetAllPostsUsecase(getItInstance()),
-  );
-  getItInstance.registerLazySingleton<CreatePostUsecase>(
-      () => CreatePostUsecase(getItInstance()));
-  getItInstance.registerLazySingleton<UpdatePostUsecase>(
-      () => UpdatePostUsecase(getItInstance()));
-  getItInstance.registerLazySingleton<DeletePostUsecase>(
-      () => DeletePostUsecase(getItInstance()));
+  getItInstance
+      .registerLazySingleton(() => GetAllPostsUsecase(getItInstance()));
+  getItInstance.registerLazySingleton(() => CreatePostUsecase(getItInstance()));
+  getItInstance.registerLazySingleton(() => UpdatePostUsecase(getItInstance()));
+  getItInstance.registerLazySingleton(() => DeletePostUsecase(getItInstance()));
 }
 
 void _setUpBlocsDependencies() {
-  getItInstance.registerFactory<PostsBloc>(() => PostsBloc(getItInstance()));
-  getItInstance.registerFactory<PostActionsBloc>(
+  getItInstance.registerFactory(() => PostsBloc(getItInstance()));
+  getItInstance.registerFactory(
     () => PostActionsBloc(
       createPostUsecase: getItInstance(),
       updatePostUsecase: getItInstance(),
