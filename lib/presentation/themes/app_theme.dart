@@ -44,6 +44,8 @@ class AppTheme {
       minLeadingWidth: Sizes.s0,
       minVerticalPadding: Sizes.s8,
     ),
-    platform: TargetPlatform.iOS,
+    snackBarTheme: const SnackBarThemeData(
+      contentTextStyle: TextStyle(color: Colors.white),
+    ),
   );
 }

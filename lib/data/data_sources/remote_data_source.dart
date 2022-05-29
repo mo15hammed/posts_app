@@ -33,15 +33,15 @@ class RemoteDataSourceImpl implements RemoteDataSource {
 
   @override
   Future<void> createPost(PostModel post) async {
-    // final data = {
-    //   'title': post.title,
-    //   'body': post.body,
-    // };
+    final data = {
+      'title': post.title,
+      'body': post.body,
+    };
 
     await dioHelper.request(
       endpoint: ApiConstants.posts,
       method: Method.post,
-      params: post.toJson(),
+      params: data,
     );
   }
 

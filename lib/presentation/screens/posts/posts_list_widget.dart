@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posts_app/core/constants/sizes.dart';
 import 'package:posts_app/domain/entities/post_entity.dart';
+import 'package:posts_app/presentation/routing/app_router.dart';
 
 class PostsListWidget extends StatelessWidget {
   final List<PostEntity> posts;
@@ -31,7 +32,13 @@ class PostsListWidget extends StatelessWidget {
             post.body,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              AppRouter.postDetails,
+              arguments: {'post': post},
+            );
+          },
         );
       },
       separatorBuilder: (context, index) {

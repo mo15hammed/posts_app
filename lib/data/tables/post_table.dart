@@ -7,7 +7,7 @@ part 'post_table.g.dart';
 @HiveType(typeId: 0)
 class PostTable extends PostEntity {
   @HiveField(0)
-  final int tId;
+  final int? tId;
   @HiveField(1)
   final String tTitle;
   @HiveField(2)

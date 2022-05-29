@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posts_app/presentation/blocs/posts/posts_bloc.dart';
 import 'package:posts_app/presentation/routing/app_router.dart';
-import 'package:posts_app/presentation/screens/posts/widgets/posts_list_widget.dart';
+import 'package:posts_app/presentation/screens/posts/posts_list_widget.dart';
 import 'package:posts_app/presentation/widgets/app_error_widget.dart';
 import 'package:posts_app/presentation/widgets/loading_widget.dart';
 
@@ -42,7 +42,10 @@ class PostsScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, AppRouter.createPost);
+          Navigator.pushNamed(
+            context,
+            AppRouter.createUpdatePost,
+          );
         },
       ),
     );
