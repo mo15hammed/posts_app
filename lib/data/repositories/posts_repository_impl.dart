@@ -31,7 +31,9 @@ class PostsRepositoryImpl implements PostsRepository {
         await localDataSource.cachePosts(remotePosts);
         return Right(remotePosts);
       } on DioError catch (e) {
-        return Left(Failure(FailureType.server, e.message));
+        return Left(Failure(FailureType.api, e.message));
+      } catch (e) {
+        return Left(Failure(FailureType.unknown, e.toString()));
       }
     } else {
       try {
@@ -39,6 +41,8 @@ class PostsRepositoryImpl implements PostsRepository {
         return Right(localPosts);
       } on EmptyCacheException catch (e) {
         return Left(Failure(FailureType.emptyCache, e.message));
+      } catch (e) {
+        return Left(Failure(FailureType.unknown, e.toString()));
       }
     }
   }
@@ -70,11 +74,13 @@ class PostsRepositoryImpl implements PostsRepository {
         await contactServer();
         return const Right(unit);
       } on DioError catch (e) {
-        return Left(Failure(FailureType.server, e.message));
+        return Left(Failure(FailureType.api, e.message));
+      } catch (e) {
+        return Left(Failure(FailureType.unknown, e.toString()));
       }
     } else {
       return Left(
-          Failure(FailureType.connection, FailureType.connection.message));
+          Failure(FailureType.network, FailureType.network.message));
     }
   }
 }

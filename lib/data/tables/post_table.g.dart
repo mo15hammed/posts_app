@@ -17,7 +17,7 @@ class PostTableAdapter extends TypeAdapter<PostTable> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return PostTable(
-      tId: fields[0] as int,
+      tId: fields[0] as int?,
       tTitle: fields[1] as String,
       tBody: fields[2] as String,
     );

@@ -18,8 +18,8 @@ class Failure extends Equatable {
 }
 
 enum FailureType {
-  server(Strings.apiFailure),
-  connection(Strings.noInternetConnection),
+  api(Strings.apiFailure),
+  network(Strings.noInternetConnection),
   emptyCache(Strings.noCachedData),
   unknown(Strings.unknownError);
 
