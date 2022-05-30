@@ -21,6 +21,7 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   hive_flutter: ^1.1.0
   shared_preferences: ^2.0.15
+  mockito: ^5.2.0
 
 dev_dependencies:
   flutter_test:
