@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posts_app/core/constants/strings.dart';
 import 'package:posts_app/presentation/routing/slide_page_route_builder.dart';
-import 'package:posts_app/presentation/screens/posts/create_update_post/create_upadte_post_screen.dart';
+import 'package:posts_app/presentation/screens/posts/create_update_post/create_update_post_screen.dart';
 import 'package:posts_app/presentation/screens/posts/post_details/post_details_screen.dart';
 import 'package:posts_app/presentation/screens/posts/posts_screen.dart';
 
